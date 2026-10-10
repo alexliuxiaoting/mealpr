@@ -7,6 +7,9 @@ test-report.json
 .env.*
 !.env.example
 dist/*.zip
+# build intermediates for the review page; `npm run site` regenerates them
+dist/mealpr-core.js
+dist/mealpr-data.json
 
 # never commit real tokens or personal data
 *token*.local
