@@ -1,0 +1,23 @@
+{
+  "_note": "plan.mjs 的输入示例。真实使用时 catalog 来自 query-meals 的返回；这里是手写占位数据。",
+  "intent": {
+    "people": 2,
+    "budget": { "currency": "CNY", "max": 70, "min": null },
+    "fulfillment": "pickup",
+    "store": "DEMO-STORE-0002",
+    "preferences": ["prefer-coupons"],
+    "exclusions": [],
+    "nutritionGoals": null,
+    "rawText": "项目上线了，帮我和同事配一顿麦当劳，2 人，70 元以内，优先用优惠券，到店取餐。",
+    "missing": []
+  },
+  "catalog": [
+    { "code": "M-BIGMAC", "name": "巨无霸", "category": "main", "price": 24.5, "available": true },
+    { "code": "M-MCCHICKEN", "name": "麦香鸡", "category": "main", "price": 15.0, "available": true },
+    { "code": "M-GRILLEDCHICKEN", "name": "板烧鸡腿堡", "category": "main", "price": 22.0, "available": true },
+    { "code": "M-FRY-M", "name": "中份薯条", "category": "side", "price": 11.0, "available": true },
+    { "code": "M-COLA-M", "name": "中杯可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-COLA-ZERO-M", "name": "中杯无糖可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-CONE", "name": "甜筒", "category": "dessert", "price": 5.0, "available": false }
+  ]
+}

@@ -1,0 +1,2257 @@
+{
+  "ok": true,
+  "generatedAt": "2026-10-10T10:00:00.000Z",
+  "note": "All data is DEMO fixture data projected through the real MealPR core. No MCP call was made; no order was created.",
+  "scenarios": [
+    {
+      "id": "demo-single",
+      "name": "单人预算餐",
+      "description": "一个人、¥40 以内、到店取餐，演示「提出 → 校验 → 修改 → Diff → 批准 → 模拟下单」的最小闭环。",
+      "requirement": "今天加班，帮我安排一个 40 元以内的麦当劳晚餐，尽量有肉、有饮料，到店取餐。",
+      "disclaimer": null,
+      "simulatedOrder": {
+        "orderId": "DEMO-ORDER-000001",
+        "status": "CREATED",
+        "simulated": true
+      },
+      "versions": [
+        {
+          "pr": {
+            "id": "MPR-DEMO-SINGLE",
+            "mode": "DEMO",
+            "title": "feat: 加班单人晚餐，控制在 ¥40 以内",
+            "status": "DRAFT",
+            "version": 1,
+            "userIntent": {
+              "people": null,
+              "budget": {
+                "currency": "CNY",
+                "max": 40,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0001",
+              "preferences": [
+                "prefer-meat"
+              ],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "今天加班，帮我安排一个 40 元以内的麦当劳晚餐，尽量有肉、有饮料，到店取餐。",
+              "missing": [
+                "people"
+              ]
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0001",
+              "name": "DEMO 门店 · 深圳科技园店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-MCCHICKEN",
+                "name": "麦香鸡",
+                "category": "main",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 15,
+                "nutritionRef": "M-MCCHICKEN",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-FRY-M",
+                "name": "中份薯条",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 11,
+                "nutritionRef": "M-FRY-M",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-M",
+                "name": "中杯可乐",
+                "category": "drink",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": null,
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 36,
+              "discountTotal": 0,
+              "deliveryFee": 0,
+              "payable": 36,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "PARTIAL",
+              "coverage": 0.6667,
+              "matched": [
+                "麦香鸡 x1",
+                "中份薯条 x1"
+              ],
+              "missing": [
+                "中杯可乐 x1"
+              ],
+              "totals": {
+                "energyKcal": 738,
+                "proteinG": 22.4,
+                "fatG": 35.5,
+                "carbG": 81.8,
+                "sodiumMg": 1040,
+                "calciumMg": 128
+              },
+              "note": "PARTIAL: only 2 item group(s) matched official data. Totals cover those items only and must not be read as the whole meal. Unresolved: 中杯可乐 x1."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 36.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 36.00 leaves 4.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "No coupon applied — priced at menu value only.",
+                "blocking": false
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "UNKNOWN",
+                "detail": "Head count unknown.",
+                "blocking": false
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-SINGLE\n\n## feat: 加班单人晚餐，控制在 ¥40 以内\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 1\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: unknown\n- Budget: ¥40.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 深圳科技园店 (`DEMO-STORE-0001`)\n- Preference: prefer-meat\n- Exclusions: none\n\n### Proposed Changes\n\n+ 麦香鸡 × 1 @ ¥15.00\n+ 中份薯条 × 1 @ ¥11.00\n+ 中杯可乐 × 1 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥40.00 |\n| Subtotal | ¥36.00 |\n| Discount | -¥0.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥36.00 |\n| Available budget left | ¥4.00 |\n\n### Coupon Check\n\nApplied: none — priced at menu value only.\n\n### Nutrition Check\n\nStatus: **PARTIAL** · official coverage 67%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 738 |\n| Protein (g) | 22.4 |\n| Fat (g) | 35.5 |\n| Carbohydrate (g) | 81.8 |\n| Sodium (mg) | 1040 |\n| Calcium (mg) | 128 |\n\n- No official data: 中杯可乐 x1\n\n> PARTIAL: only 2 item group(s) matched official data. Totals cover those items only and must not be read as the whole meal. Unresolved: 中杯可乐 x1.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 36.00.\n- [x] Within budget — payable 36.00 leaves 4.00 headroom.\n- [x] Coupon check — No coupon applied — priced at menu value only.\n- [ ] Portions adequate **`UNKNOWN`** — Head count unknown. (non-blocking)\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `d35f977d8574`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        },
+        {
+          "pr": {
+            "id": "MPR-DEMO-SINGLE",
+            "mode": "DEMO",
+            "title": "feat: 加班单人晚餐 v2 —— 无糖饮料 + 去掉薯条",
+            "status": "DRAFT",
+            "version": 2,
+            "userIntent": {
+              "people": null,
+              "budget": {
+                "currency": "CNY",
+                "max": 40,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0001",
+              "preferences": [
+                "prefer-meat"
+              ],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "今天加班，帮我安排一个 40 元以内的麦当劳晚餐，尽量有肉、有饮料，到店取餐。",
+              "missing": [
+                "people"
+              ]
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0001",
+              "name": "DEMO 门店 · 深圳科技园店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-MCCHICKEN",
+                "name": "麦香鸡",
+                "category": "main",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 15,
+                "nutritionRef": "M-MCCHICKEN",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-ZERO-M",
+                "name": "中杯无糖可乐",
+                "category": "drink",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": null,
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 25,
+              "discountTotal": 0,
+              "deliveryFee": 0,
+              "payable": 25,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "PARTIAL",
+              "coverage": 0.5,
+              "matched": [
+                "麦香鸡 x1"
+              ],
+              "missing": [
+                "中杯无糖可乐 x1"
+              ],
+              "totals": {
+                "energyKcal": 401,
+                "proteinG": 18.2,
+                "fatG": 19.4,
+                "carbG": 38.1,
+                "sodiumMg": 780,
+                "calciumMg": 120
+              },
+              "note": "PARTIAL: only 1 item group(s) matched official data. Totals cover those items only and must not be read as the whole meal. Unresolved: 中杯无糖可乐 x1."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "2 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 25.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 25.00 leaves 15.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "No coupon applied — priced at menu value only.",
+                "blocking": false
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "UNKNOWN",
+                "detail": "Head count unknown.",
+                "blocking": false
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-SINGLE\n\n## feat: 加班单人晚餐 v2 —— 无糖饮料 + 去掉薯条\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 2\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: unknown\n- Budget: ¥40.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 深圳科技园店 (`DEMO-STORE-0001`)\n- Preference: prefer-meat\n- Exclusions: none\n\n### Proposed Changes\n\n+ 麦香鸡 × 1 @ ¥15.00\n+ 中杯无糖可乐 × 1 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥40.00 |\n| Subtotal | ¥25.00 |\n| Discount | -¥0.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥25.00 |\n| Available budget left | ¥15.00 |\n\n### Coupon Check\n\nApplied: none — priced at menu value only.\n\n### Nutrition Check\n\nStatus: **PARTIAL** · official coverage 50%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 401 |\n| Protein (g) | 18.2 |\n| Fat (g) | 19.4 |\n| Carbohydrate (g) | 38.1 |\n| Sodium (mg) | 780 |\n| Calcium (mg) | 120 |\n\n- No official data: 中杯无糖可乐 x1\n\n> PARTIAL: only 1 item group(s) matched official data. Totals cover those items only and must not be read as the whole meal. Unresolved: 中杯无糖可乐 x1.\n\n### Validation\n\n- [x] Products available — 2 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 25.00.\n- [x] Within budget — payable 25.00 leaves 15.00 headroom.\n- [x] Coupon check — No coupon applied — priced at menu value only.\n- [ ] Portions adequate **`UNKNOWN`** — Head count unknown. (non-blocking)\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `16c7242712eb`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        }
+      ],
+      "diffs": [
+        {
+          "fromVersion": 1,
+          "toVersion": 2,
+          "summary": {
+            "added": 1,
+            "removed": 2,
+            "quantityChanged": 0,
+            "optionsChanged": 0
+          },
+          "items": [
+            {
+              "kind": "removed",
+              "code": "M-COLA-M",
+              "name": "中杯可乐",
+              "beforeQty": 1,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "added",
+              "code": "M-COLA-ZERO-M",
+              "name": "中杯无糖可乐",
+              "beforeQty": null,
+              "afterQty": 1,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "removed",
+              "code": "M-FRY-M",
+              "name": "中份薯条",
+              "beforeQty": 1,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "unchanged",
+              "code": "M-MCCHICKEN",
+              "name": "麦香鸡",
+              "beforeQty": 1,
+              "afterQty": 1,
+              "beforeOptions": [],
+              "afterOptions": []
+            }
+          ],
+          "coupons": [],
+          "payable": {
+            "before": 36,
+            "after": 25,
+            "changed": true,
+            "verified": true
+          },
+          "discount": {
+            "before": 0,
+            "after": 0,
+            "changed": false,
+            "verified": true
+          },
+          "remainingBudget": {
+            "before": 4,
+            "after": 15,
+            "changed": true,
+            "verified": true
+          },
+          "fulfillment": {
+            "before": "pickup",
+            "after": "pickup",
+            "changed": false,
+            "verified": true
+          },
+          "store": {
+            "before": "DEMO-STORE-0001",
+            "after": "DEMO-STORE-0001",
+            "changed": false,
+            "verified": true
+          },
+          "nutrition": {
+            "beforeStatus": "PARTIAL",
+            "afterStatus": "PARTIAL",
+            "beforeCoverage": 0.6667,
+            "afterCoverage": 0.5,
+            "beforeEnergKcal": 738,
+            "afterEnergyKcal": 401,
+            "note": "official coverage 67% -> 50%; energy 738 -> 401 kcal (matched items only); no official data for: 中杯无糖可乐 x1"
+          },
+          "unified": "--- Meal PR v1\n+++ Meal PR v2\n@@ Items @@\n- 中杯可乐 x1  (M-COLA-M)\n+ 中杯无糖可乐 x1  (M-COLA-ZERO-M)\n- 中份薯条 x1  (M-FRY-M)\n  麦香鸡 x1\n@@ Payment @@\n- Payable: ¥36.00\n+ Payable: ¥25.00\n- Budget left: ¥4.00\n+ Budget left: ¥15.00\n@@ Nutrition @@\n  PARTIAL -> PARTIAL :: official coverage 67% -> 50%; energy 738 -> 401 kcal (matched items only); no official data for: 中杯无糖可乐 x1\n@@ Result @@\n[ ] No re-review needed\n[x] Re-approval required",
+          "requiresReapproval": true,
+          "reason": "Plan terms changed: the previously granted approval is void and the PR returns to READY_FOR_REVIEW."
+        }
+      ],
+      "executionGuard": {
+        "ok": false,
+        "reason": "demo-mode",
+        "detail": "DEMO PRs can only produce a simulated order; the real create-order tool is never invoked."
+      }
+    },
+    {
+      "id": "demo-team",
+      "name": "双人庆功餐",
+      "description": "两人的项目上线庆功餐，¥70 以内，带一张模拟优惠券，演示带券报价与预算收紧后的重新提案。",
+      "requirement": "项目上线了，帮我和同事配一顿麦当劳，2 人，70 元以内，优先用优惠券，到店取餐。",
+      "disclaimer": null,
+      "simulatedOrder": {
+        "orderId": "DEMO-ORDER-000002",
+        "status": "CREATED",
+        "simulated": true
+      },
+      "versions": [
+        {
+          "pr": {
+            "id": "MPR-DEMO-TEAM",
+            "mode": "DEMO",
+            "title": "feat: 项目上线庆功双人餐",
+            "status": "DRAFT",
+            "version": 1,
+            "userIntent": {
+              "people": 2,
+              "budget": {
+                "currency": "CNY",
+                "max": 70,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0002",
+              "preferences": [
+                "prefer-coupons"
+              ],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "项目上线了，帮我和同事配一顿麦当劳，2 人，70 元以内，优先用优惠券，到店取餐。",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0002",
+              "name": "DEMO 门店 · 上海张江店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-GRILLEDCHICKEN",
+                "name": "板烧鸡腿堡",
+                "category": "main",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 22,
+                "nutritionRef": "M-GRILLEDCHICKEN",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-FRY-M",
+                "name": "中份薯条",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 11,
+                "nutritionRef": "M-FRY-M",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-M",
+                "name": "中杯可乐",
+                "category": "drink",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": "M-COLA-M",
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [
+              {
+                "id": "DEMO-COUPON-TEAM-8",
+                "name": "DEMO 券 · 双人餐立减 ¥8",
+                "source": "demo",
+                "discountAmount": 8,
+                "verified": true,
+                "note": "占位优惠券，非真实麦当劳券"
+              }
+            ],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 75,
+              "discountTotal": 8,
+              "deliveryFee": 0,
+              "payable": 67,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "VERIFIED",
+              "coverage": 1,
+              "matched": [
+                "板烧鸡腿堡 x2",
+                "中份薯条 x1",
+                "中杯可乐 x2"
+              ],
+              "missing": [],
+              "totals": {
+                "energyKcal": 1441,
+                "proteinG": 53.4,
+                "fatG": 50.5,
+                "carbG": 190.5,
+                "sodiumMg": 2070,
+                "calciumMg": 308
+              },
+              "note": "All items matched official nutrition data; totals are summed from official per-item values."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 67.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 67.00 leaves 3.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "1 coupon(s) confirmed by live query: DEMO 券 · 双人餐立减 ¥8.",
+                "blocking": true
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "PASS",
+                "detail": "2 main(s) for 2 person(s).",
+                "blocking": true
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-TEAM\n\n## feat: 项目上线庆功双人餐\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 1\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 2\n- Budget: ¥70.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 上海张江店 (`DEMO-STORE-0002`)\n- Preference: prefer-coupons\n- Exclusions: none\n\n### Proposed Changes\n\n+ 板烧鸡腿堡 × 2 @ ¥22.00\n+ 中份薯条 × 1 @ ¥11.00\n+ 中杯可乐 × 2 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥70.00 |\n| Subtotal | ¥75.00 |\n| Discount | -¥8.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥67.00 |\n| Available budget left | ¥3.00 |\n\n### Coupon Check\n\n- DEMO 券 · 双人餐立减 ¥8 (`DEMO-COUPON-TEAM-8`) — **unverified**, discount ¥8.00\n\n### Nutrition Check\n\nStatus: **VERIFIED** · official coverage 100%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 1441 |\n| Protein (g) | 53.4 |\n| Fat (g) | 50.5 |\n| Carbohydrate (g) | 190.5 |\n| Sodium (mg) | 2070 |\n| Calcium (mg) | 308 |\n\n> All items matched official nutrition data; totals are summed from official per-item values.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 67.00.\n- [x] Within budget — payable 67.00 leaves 3.00 headroom.\n- [x] Coupon check — 1 coupon(s) confirmed by live query: DEMO 券 · 双人餐立减 ¥8.\n- [x] Portions adequate — 2 main(s) for 2 person(s).\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `e72e07d90494`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        },
+        {
+          "pr": {
+            "id": "MPR-DEMO-TEAM",
+            "mode": "DEMO",
+            "title": "feat: 项目上线庆功双人餐 v2 —— 预算收紧到 ¥60",
+            "status": "DRAFT",
+            "version": 2,
+            "userIntent": {
+              "people": 2,
+              "budget": {
+                "currency": "CNY",
+                "max": 70,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0002",
+              "preferences": [
+                "prefer-coupons"
+              ],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "项目上线了，帮我和同事配一顿麦当劳，2 人，70 元以内，优先用优惠券，到店取餐。",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0002",
+              "name": "DEMO 门店 · 上海张江店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-MCCHICKEN",
+                "name": "麦香鸡",
+                "category": "main",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 15,
+                "nutritionRef": "M-MCCHICKEN",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-FRY-M",
+                "name": "中份薯条",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 11,
+                "nutritionRef": "M-FRY-M",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-ZERO-M",
+                "name": "中杯无糖可乐",
+                "category": "drink",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": "M-COLA-ZERO-M",
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [
+              {
+                "id": "DEMO-COUPON-TEAM-8",
+                "name": "DEMO 券 · 双人餐立减 ¥8",
+                "source": "demo",
+                "discountAmount": 8,
+                "verified": true,
+                "note": "占位优惠券，非真实麦当劳券"
+              }
+            ],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 61,
+              "discountTotal": 8,
+              "deliveryFee": 0,
+              "payable": 53,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "VERIFIED",
+              "coverage": 1,
+              "matched": [
+                "麦香鸡 x2",
+                "中份薯条 x1",
+                "中杯无糖可乐 x2"
+              ],
+              "missing": [],
+              "totals": {
+                "energyKcal": 1141,
+                "proteinG": 40.6,
+                "fatG": 54.9,
+                "carbG": 120.3,
+                "sodiumMg": 1860,
+                "calciumMg": 248
+              },
+              "note": "All items matched official nutrition data; totals are summed from official per-item values."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 53.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 53.00 leaves 17.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "1 coupon(s) confirmed by live query: DEMO 券 · 双人餐立减 ¥8.",
+                "blocking": true
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "PASS",
+                "detail": "2 main(s) for 2 person(s).",
+                "blocking": true
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-TEAM\n\n## feat: 项目上线庆功双人餐 v2 —— 预算收紧到 ¥60\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 2\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 2\n- Budget: ¥70.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 上海张江店 (`DEMO-STORE-0002`)\n- Preference: prefer-coupons\n- Exclusions: none\n\n### Proposed Changes\n\n+ 麦香鸡 × 2 @ ¥15.00\n+ 中份薯条 × 1 @ ¥11.00\n+ 中杯无糖可乐 × 2 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥70.00 |\n| Subtotal | ¥61.00 |\n| Discount | -¥8.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥53.00 |\n| Available budget left | ¥17.00 |\n\n### Coupon Check\n\n- DEMO 券 · 双人餐立减 ¥8 (`DEMO-COUPON-TEAM-8`) — **unverified**, discount ¥8.00\n\n### Nutrition Check\n\nStatus: **VERIFIED** · official coverage 100%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 1141 |\n| Protein (g) | 40.6 |\n| Fat (g) | 54.9 |\n| Carbohydrate (g) | 120.3 |\n| Sodium (mg) | 1860 |\n| Calcium (mg) | 248 |\n\n> All items matched official nutrition data; totals are summed from official per-item values.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 53.00.\n- [x] Within budget — payable 53.00 leaves 17.00 headroom.\n- [x] Coupon check — 1 coupon(s) confirmed by live query: DEMO 券 · 双人餐立减 ¥8.\n- [x] Portions adequate — 2 main(s) for 2 person(s).\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `2e10887cb3b0`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        }
+      ],
+      "diffs": [
+        {
+          "fromVersion": 1,
+          "toVersion": 2,
+          "summary": {
+            "added": 2,
+            "removed": 2,
+            "quantityChanged": 0,
+            "optionsChanged": 0
+          },
+          "items": [
+            {
+              "kind": "removed",
+              "code": "M-COLA-M",
+              "name": "中杯可乐",
+              "beforeQty": 2,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "added",
+              "code": "M-COLA-ZERO-M",
+              "name": "中杯无糖可乐",
+              "beforeQty": null,
+              "afterQty": 2,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "unchanged",
+              "code": "M-FRY-M",
+              "name": "中份薯条",
+              "beforeQty": 1,
+              "afterQty": 1,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "removed",
+              "code": "M-GRILLEDCHICKEN",
+              "name": "板烧鸡腿堡",
+              "beforeQty": 2,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "added",
+              "code": "M-MCCHICKEN",
+              "name": "麦香鸡",
+              "beforeQty": null,
+              "afterQty": 2,
+              "beforeOptions": [],
+              "afterOptions": []
+            }
+          ],
+          "coupons": [
+            {
+              "kind": "unchanged",
+              "id": "DEMO-COUPON-TEAM-8",
+              "name": "DEMO 券 · 双人餐立减 ¥8",
+              "verified": true
+            }
+          ],
+          "payable": {
+            "before": 67,
+            "after": 53,
+            "changed": true,
+            "verified": true
+          },
+          "discount": {
+            "before": 8,
+            "after": 8,
+            "changed": false,
+            "verified": true
+          },
+          "remainingBudget": {
+            "before": 3,
+            "after": 17,
+            "changed": true,
+            "verified": true
+          },
+          "fulfillment": {
+            "before": "pickup",
+            "after": "pickup",
+            "changed": false,
+            "verified": true
+          },
+          "store": {
+            "before": "DEMO-STORE-0002",
+            "after": "DEMO-STORE-0002",
+            "changed": false,
+            "verified": true
+          },
+          "nutrition": {
+            "beforeStatus": "VERIFIED",
+            "afterStatus": "VERIFIED",
+            "beforeCoverage": 1,
+            "afterCoverage": 1,
+            "beforeEnergKcal": 1441,
+            "afterEnergyKcal": 1141,
+            "note": "Nutrition coverage unchanged."
+          },
+          "unified": "--- Meal PR v1\n+++ Meal PR v2\n@@ Items @@\n- 中杯可乐 x2  (M-COLA-M)\n+ 中杯无糖可乐 x2  (M-COLA-ZERO-M)\n  中份薯条 x1\n- 板烧鸡腿堡 x2  (M-GRILLEDCHICKEN)\n+ 麦香鸡 x2  (M-MCCHICKEN)\n@@ Coupons @@\n  coupon DEMO 券 · 双人餐立减 ¥8\n@@ Payment @@\n- Payable: ¥67.00\n+ Payable: ¥53.00\n- Budget left: ¥3.00\n+ Budget left: ¥17.00\n@@ Nutrition @@\n  VERIFIED -> VERIFIED :: Nutrition coverage unchanged.\n@@ Result @@\n[ ] No re-review needed\n[x] Re-approval required",
+          "requiresReapproval": true,
+          "reason": "Plan terms changed: the previously granted approval is void and the PR returns to READY_FOR_REVIEW."
+        }
+      ],
+      "executionGuard": {
+        "ok": false,
+        "reason": "demo-mode",
+        "detail": "DEMO PRs can only produce a simulated order; the real create-order tool is never invoked."
+      }
+    },
+    {
+      "id": "demo-coupon-expired",
+      "name": "优惠券失效后重新报价",
+      "description": "带券方案原本在预算内，券失效后按原价重算会超预算；系统必须阻止进入待审核，再由用户降级菜品后重新提案。",
+      "requirement": "我和同事 2 人吃饭，预算 70 元以内，用上那张双人券，到店取餐。",
+      "disclaimer": null,
+      "simulatedOrder": {
+        "orderId": "DEMO-ORDER-000003",
+        "status": "CREATED",
+        "simulated": true
+      },
+      "versions": [
+        {
+          "pr": {
+            "id": "MPR-DEMO-COUPON-EXPIRED",
+            "mode": "DEMO",
+            "title": "feat: 双人套餐 + 双人券（¥70 以内）",
+            "status": "DRAFT",
+            "version": 1,
+            "userIntent": {
+              "people": 2,
+              "budget": {
+                "currency": "CNY",
+                "max": 70,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0003",
+              "preferences": [],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "我和同事 2 人吃饭，预算 70 元以内，用上那张双人券，到店取餐。",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0003",
+              "name": "DEMO 门店 · 北京中关村店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-BIGMAC",
+                "name": "巨无霸",
+                "category": "main",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 24.5,
+                "nutritionRef": "M-BIGMAC",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-FRY-M",
+                "name": "中份薯条",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 11,
+                "nutritionRef": "M-FRY-M",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-M",
+                "name": "中杯可乐",
+                "category": "drink",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": "M-COLA-M",
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [
+              {
+                "id": "DEMO-COUPON-EXPIRED-12",
+                "name": "DEMO 券 · 双人餐立减 ¥12",
+                "source": "demo",
+                "discountAmount": 12,
+                "verified": true,
+                "note": "占位优惠券，稍后会在 Demo 中失效"
+              }
+            ],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 80,
+              "discountTotal": 12,
+              "deliveryFee": 0,
+              "payable": 68,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "VERIFIED",
+              "coverage": 1,
+              "matched": [
+                "巨无霸 x2",
+                "中份薯条 x1",
+                "中杯可乐 x2"
+              ],
+              "missing": [],
+              "totals": {
+                "energyKcal": 1733,
+                "proteinG": 56.8,
+                "fatG": 77.1,
+                "carbG": 205.9,
+                "sodiumMg": 2390,
+                "calciumMg": 528
+              },
+              "note": "All items matched official nutrition data; totals are summed from official per-item values."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 68.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 68.00 leaves 2.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "1 coupon(s) confirmed by live query: DEMO 券 · 双人餐立减 ¥12.",
+                "blocking": true
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "PASS",
+                "detail": "2 main(s) for 2 person(s).",
+                "blocking": true
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-COUPON-EXPIRED\n\n## feat: 双人套餐 + 双人券（¥70 以内）\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 1\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 2\n- Budget: ¥70.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 北京中关村店 (`DEMO-STORE-0003`)\n- Preference: none\n- Exclusions: none\n\n### Proposed Changes\n\n+ 巨无霸 × 2 @ ¥24.50\n+ 中份薯条 × 1 @ ¥11.00\n+ 中杯可乐 × 2 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥70.00 |\n| Subtotal | ¥80.00 |\n| Discount | -¥12.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥68.00 |\n| Available budget left | ¥2.00 |\n\n### Coupon Check\n\n- DEMO 券 · 双人餐立减 ¥12 (`DEMO-COUPON-EXPIRED-12`) — **unverified**, discount ¥12.00\n\n### Nutrition Check\n\nStatus: **VERIFIED** · official coverage 100%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 1733 |\n| Protein (g) | 56.8 |\n| Fat (g) | 77.1 |\n| Carbohydrate (g) | 205.9 |\n| Sodium (mg) | 2390 |\n| Calcium (mg) | 528 |\n\n> All items matched official nutrition data; totals are summed from official per-item values.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 68.00.\n- [x] Within budget — payable 68.00 leaves 2.00 headroom.\n- [x] Coupon check — 1 coupon(s) confirmed by live query: DEMO 券 · 双人餐立减 ¥12.\n- [x] Portions adequate — 2 main(s) for 2 person(s).\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `86ab140a4f9b`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        },
+        {
+          "pr": {
+            "id": "MPR-DEMO-COUPON-EXPIRED",
+            "mode": "DEMO",
+            "title": "fix: 优惠券不可用 —— 按原价重新报价",
+            "status": "DRAFT",
+            "version": 2,
+            "userIntent": {
+              "people": 2,
+              "budget": {
+                "currency": "CNY",
+                "max": 70,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0003",
+              "preferences": [],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "我和同事 2 人吃饭，预算 70 元以内，用上那张双人券，到店取餐。",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0003",
+              "name": "DEMO 门店 · 北京中关村店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-BIGMAC",
+                "name": "巨无霸",
+                "category": "main",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 24.5,
+                "nutritionRef": "M-BIGMAC",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-FRY-M",
+                "name": "中份薯条",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 11,
+                "nutritionRef": "M-FRY-M",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-M",
+                "name": "中杯可乐",
+                "category": "drink",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": "M-COLA-M",
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 80,
+              "discountTotal": 0,
+              "deliveryFee": 0,
+              "payable": 80,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "VERIFIED",
+              "coverage": 1,
+              "matched": [
+                "巨无霸 x2",
+                "中份薯条 x1",
+                "中杯可乐 x2"
+              ],
+              "missing": [],
+              "totals": {
+                "energyKcal": 1733,
+                "proteinG": 56.8,
+                "fatG": 77.1,
+                "carbG": 205.9,
+                "sodiumMg": 2390,
+                "calciumMg": 528
+              },
+              "note": "All items matched official nutrition data; totals are summed from official per-item values."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 80.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "FAIL",
+                "detail": "payable 80.00 exceeds cap 70.00 by 10.00.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "No coupon applied — priced at menu value only.",
+                "blocking": false
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "PASS",
+                "detail": "2 main(s) for 2 person(s).",
+                "blocking": true
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-COUPON-EXPIRED\n\n## fix: 优惠券不可用 —— 按原价重新报价\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 2\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 2\n- Budget: ¥70.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 北京中关村店 (`DEMO-STORE-0003`)\n- Preference: none\n- Exclusions: none\n\n### Proposed Changes\n\n+ 巨无霸 × 2 @ ¥24.50\n+ 中份薯条 × 1 @ ¥11.00\n+ 中杯可乐 × 2 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥70.00 |\n| Subtotal | ¥80.00 |\n| Discount | -¥0.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥80.00 |\n| Available budget left | ¥-10.00 |\n\n### Coupon Check\n\nApplied: none — priced at menu value only.\n\n### Nutrition Check\n\nStatus: **VERIFIED** · official coverage 100%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 1733 |\n| Protein (g) | 56.8 |\n| Fat (g) | 77.1 |\n| Carbohydrate (g) | 205.9 |\n| Sodium (mg) | 2390 |\n| Calcium (mg) | 528 |\n\n> All items matched official nutrition data; totals are summed from official per-item values.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 80.00.\n- [ ] Within budget **`FAIL`** — payable 80.00 exceeds cap 70.00 by 10.00.\n- [x] Coupon check — No coupon applied — priced at menu value only.\n- [x] Portions adequate — 2 main(s) for 2 person(s).\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `7a3bd7b55c68`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        },
+        {
+          "pr": {
+            "id": "MPR-DEMO-COUPON-EXPIRED",
+            "mode": "DEMO",
+            "title": "feat: 双人套餐 v3 —— 券失效后改用更低价主食",
+            "status": "DRAFT",
+            "version": 3,
+            "userIntent": {
+              "people": 2,
+              "budget": {
+                "currency": "CNY",
+                "max": 70,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0003",
+              "preferences": [],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "我和同事 2 人吃饭，预算 70 元以内，用上那张双人券，到店取餐。",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0003",
+              "name": "DEMO 门店 · 北京中关村店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "M-MCCHICKEN",
+                "name": "麦香鸡",
+                "category": "main",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 15,
+                "nutritionRef": "M-MCCHICKEN",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-FRY-M",
+                "name": "中份薯条",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 11,
+                "nutritionRef": "M-FRY-M",
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-COLA-M",
+                "name": "中杯可乐",
+                "category": "drink",
+                "quantity": 2,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": "M-COLA-M",
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 61,
+              "discountTotal": 0,
+              "deliveryFee": 0,
+              "payable": 61,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "VERIFIED",
+              "coverage": 1,
+              "matched": [
+                "麦香鸡 x2",
+                "中份薯条 x1",
+                "中杯可乐 x2"
+              ],
+              "missing": [],
+              "totals": {
+                "energyKcal": 1435,
+                "proteinG": 40.6,
+                "fatG": 54.9,
+                "carbG": 193.9,
+                "sodiumMg": 1850,
+                "calciumMg": 248
+              },
+              "note": "All items matched official nutrition data; totals are summed from official per-item values."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 61.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 61.00 leaves 9.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "No coupon applied — priced at menu value only.",
+                "blocking": false
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "PASS",
+                "detail": "2 main(s) for 2 person(s).",
+                "blocking": true
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "No combo in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-COUPON-EXPIRED\n\n## feat: 双人套餐 v3 —— 券失效后改用更低价主食\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 3\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 2\n- Budget: ¥70.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 北京中关村店 (`DEMO-STORE-0003`)\n- Preference: none\n- Exclusions: none\n\n### Proposed Changes\n\n+ 麦香鸡 × 2 @ ¥15.00\n+ 中份薯条 × 1 @ ¥11.00\n+ 中杯可乐 × 2 @ ¥10.00\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥70.00 |\n| Subtotal | ¥61.00 |\n| Discount | -¥0.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥61.00 |\n| Available budget left | ¥9.00 |\n\n### Coupon Check\n\nApplied: none — priced at menu value only.\n\n### Nutrition Check\n\nStatus: **VERIFIED** · official coverage 100%\n\n| Nutrient | Total (matched items only) |\n| --- | --- |\n| Energy (kcal) | 1435 |\n| Protein (g) | 40.6 |\n| Fat (g) | 54.9 |\n| Carbohydrate (g) | 193.9 |\n| Sodium (mg) | 1850 |\n| Calcium (mg) | 248 |\n\n> All items matched official nutrition data; totals are summed from official per-item values.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 61.00.\n- [x] Within budget — payable 61.00 leaves 9.00 headroom.\n- [x] Coupon check — No coupon applied — priced at menu value only.\n- [x] Portions adequate — 2 main(s) for 2 person(s).\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — No combo in this plan.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `b8d1245106e9`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        }
+      ],
+      "diffs": [
+        {
+          "fromVersion": 1,
+          "toVersion": 2,
+          "summary": {
+            "added": 0,
+            "removed": 0,
+            "quantityChanged": 0,
+            "optionsChanged": 0
+          },
+          "items": [
+            {
+              "kind": "unchanged",
+              "code": "M-BIGMAC",
+              "name": "巨无霸",
+              "beforeQty": 2,
+              "afterQty": 2,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "unchanged",
+              "code": "M-COLA-M",
+              "name": "中杯可乐",
+              "beforeQty": 2,
+              "afterQty": 2,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "unchanged",
+              "code": "M-FRY-M",
+              "name": "中份薯条",
+              "beforeQty": 1,
+              "afterQty": 1,
+              "beforeOptions": [],
+              "afterOptions": []
+            }
+          ],
+          "coupons": [
+            {
+              "kind": "removed",
+              "id": "DEMO-COUPON-EXPIRED-12",
+              "name": "DEMO 券 · 双人餐立减 ¥12",
+              "verified": true
+            }
+          ],
+          "payable": {
+            "before": 68,
+            "after": 80,
+            "changed": true,
+            "verified": true
+          },
+          "discount": {
+            "before": 12,
+            "after": 0,
+            "changed": true,
+            "verified": true
+          },
+          "remainingBudget": {
+            "before": 2,
+            "after": -10,
+            "changed": true,
+            "verified": true
+          },
+          "fulfillment": {
+            "before": "pickup",
+            "after": "pickup",
+            "changed": false,
+            "verified": true
+          },
+          "store": {
+            "before": "DEMO-STORE-0003",
+            "after": "DEMO-STORE-0003",
+            "changed": false,
+            "verified": true
+          },
+          "nutrition": {
+            "beforeStatus": "VERIFIED",
+            "afterStatus": "VERIFIED",
+            "beforeCoverage": 1,
+            "afterCoverage": 1,
+            "beforeEnergKcal": 1733,
+            "afterEnergyKcal": 1733,
+            "note": "Nutrition coverage unchanged."
+          },
+          "unified": "--- Meal PR v1\n+++ Meal PR v2\n@@ Items @@\n  巨无霸 x2\n  中杯可乐 x2\n  中份薯条 x1\n@@ Coupons @@\n- coupon DEMO 券 · 双人餐立减 ¥12 (DEMO-COUPON-EXPIRED-12)\n@@ Payment @@\n- Payable: ¥68.00\n+ Payable: ¥80.00\n- Budget left: ¥2.00\n+ Budget left: ¥-10.00\n@@ Nutrition @@\n  VERIFIED -> VERIFIED :: Nutrition coverage unchanged.\n@@ Result @@\n[ ] No re-review needed\n[x] Re-approval required",
+          "requiresReapproval": true,
+          "reason": "Plan terms changed: the previously granted approval is void and the PR returns to READY_FOR_REVIEW."
+        },
+        {
+          "fromVersion": 2,
+          "toVersion": 3,
+          "summary": {
+            "added": 1,
+            "removed": 1,
+            "quantityChanged": 0,
+            "optionsChanged": 0
+          },
+          "items": [
+            {
+              "kind": "removed",
+              "code": "M-BIGMAC",
+              "name": "巨无霸",
+              "beforeQty": 2,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "unchanged",
+              "code": "M-COLA-M",
+              "name": "中杯可乐",
+              "beforeQty": 2,
+              "afterQty": 2,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "unchanged",
+              "code": "M-FRY-M",
+              "name": "中份薯条",
+              "beforeQty": 1,
+              "afterQty": 1,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "added",
+              "code": "M-MCCHICKEN",
+              "name": "麦香鸡",
+              "beforeQty": null,
+              "afterQty": 2,
+              "beforeOptions": [],
+              "afterOptions": []
+            }
+          ],
+          "coupons": [],
+          "payable": {
+            "before": 80,
+            "after": 61,
+            "changed": true,
+            "verified": true
+          },
+          "discount": {
+            "before": 0,
+            "after": 0,
+            "changed": false,
+            "verified": true
+          },
+          "remainingBudget": {
+            "before": -10,
+            "after": 9,
+            "changed": true,
+            "verified": true
+          },
+          "fulfillment": {
+            "before": "pickup",
+            "after": "pickup",
+            "changed": false,
+            "verified": true
+          },
+          "store": {
+            "before": "DEMO-STORE-0003",
+            "after": "DEMO-STORE-0003",
+            "changed": false,
+            "verified": true
+          },
+          "nutrition": {
+            "beforeStatus": "VERIFIED",
+            "afterStatus": "VERIFIED",
+            "beforeCoverage": 1,
+            "afterCoverage": 1,
+            "beforeEnergKcal": 1733,
+            "afterEnergyKcal": 1435,
+            "note": "Nutrition coverage unchanged."
+          },
+          "unified": "--- Meal PR v2\n+++ Meal PR v3\n@@ Items @@\n- 巨无霸 x2  (M-BIGMAC)\n  中杯可乐 x2\n  中份薯条 x1\n+ 麦香鸡 x2  (M-MCCHICKEN)\n@@ Payment @@\n- Payable: ¥80.00\n+ Payable: ¥61.00\n- Budget left: ¥-10.00\n+ Budget left: ¥9.00\n@@ Nutrition @@\n  VERIFIED -> VERIFIED :: Nutrition coverage unchanged.\n@@ Result @@\n[ ] No re-review needed\n[x] Re-approval required",
+          "requiresReapproval": true,
+          "reason": "Plan terms changed: the previously granted approval is void and the PR returns to READY_FOR_REVIEW."
+        }
+      ],
+      "executionGuard": {
+        "ok": false,
+        "reason": "demo-mode",
+        "detail": "DEMO PRs can only produce a simulated order; the real create-order tool is never invoked."
+      }
+    },
+    {
+      "id": "demo-combo",
+      "name": "套餐重复计价陷阱",
+      "description": "演示套餐（combo）不能被当作纯主食：未用 query-meal-detail 核对组成前会被自动校验拦下；核对后发现套餐自带小食与饮料，于是移除重复项并重新报价。",
+      "requirement": "帮我点麦当劳，1 人，60 元以内，到店取餐，尽量划算",
+      "disclaimer": null,
+      "simulatedOrder": {
+        "orderId": "DEMO-ORDER-000004",
+        "status": "CREATED",
+        "simulated": true
+      },
+      "versions": [
+        {
+          "pr": {
+            "id": "MPR-DEMO-COMBO",
+            "mode": "DEMO",
+            "title": "feat: 一人套餐（未核对组成）",
+            "status": "DRAFT",
+            "version": 1,
+            "userIntent": {
+              "people": 1,
+              "budget": {
+                "currency": "CNY",
+                "max": 60,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0004",
+              "preferences": [],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "帮我点麦当劳，1 人，60 元以内，到店取餐，尽量划算",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0004",
+              "name": "DEMO 门店 · 深圳科技园店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "C-CRISPY-COMBO",
+                "name": "酥脆无双套餐",
+                "category": "combo",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 36.5,
+                "nutritionRef": null,
+                "comboComposition": {
+                  "components": [],
+                  "source": "unknown",
+                  "note": null
+                },
+                "remark": null
+              },
+              {
+                "code": "M-COLA-M",
+                "name": "中杯可乐",
+                "category": "drink",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 10,
+                "nutritionRef": null,
+                "comboComposition": null,
+                "remark": null
+              },
+              {
+                "code": "M-APPLE",
+                "name": "苹果片",
+                "category": "side",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 6.5,
+                "nutritionRef": null,
+                "comboComposition": null,
+                "remark": null
+              }
+            ],
+            "coupons": [],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 53,
+              "discountTotal": 0,
+              "deliveryFee": 0,
+              "payable": 53,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "UNKNOWN",
+              "coverage": 0,
+              "matched": [],
+              "missing": [
+                "酥脆无双套餐 x1",
+                "中杯可乐 x1",
+                "苹果片 x1"
+              ],
+              "totals": {
+                "energyKcal": null,
+                "proteinG": null,
+                "fatG": null,
+                "carbG": null,
+                "sodiumMg": null,
+                "calciumMg": null
+              },
+              "note": "UNKNOWN: no plan item matched list-nutrition-foods. Nothing is asserted."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "3 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 53.00.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 53.00 leaves 7.00 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "No coupon applied — priced at menu value only.",
+                "blocking": false
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "UNKNOWN",
+                "detail": "at least 1 main serving(s) for 1 person(s), but this counts an unverified combo as one serving. Resolve the combo composition first.",
+                "blocking": false
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "UNKNOWN",
+                "detail": "Combo component list was never read from query-meal-detail: 酥脆无双套餐 (C-CRISPY-COMBO). A combo usually bundles its own side and drink — without the component list we cannot tell whether the rest of the plan double-charges them, nor whether the head count is actually covered. Call query-meal-detail with the combo code before this plan can be approved.",
+                "blocking": true
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-COMBO\n\n## feat: 一人套餐（未核对组成）\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 1\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 1\n- Budget: ¥60.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 深圳科技园店 (`DEMO-STORE-0004`)\n- Preference: none\n- Exclusions: none\n\n### Proposed Changes\n\n+ 酥脆无双套餐 × 1 @ ¥36.50\n  - ⚠️ **套餐组成未核对**：需先调用 `query-meal-detail(code=\"C-CRISPY-COMBO\")` 读取组成，确认后本方案才可批准。\n+ 中杯可乐 × 1 @ ¥10.00\n+ 苹果片 × 1 @ ¥6.50\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥60.00 |\n| Subtotal | ¥53.00 |\n| Discount | -¥0.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥53.00 |\n| Available budget left | ¥7.00 |\n\n### Coupon Check\n\nApplied: none — priced at menu value only.\n\n### Nutrition Check\n\nStatus: **UNKNOWN** · official coverage 0%\n\n- No official data: 酥脆无双套餐 x1, 中杯可乐 x1, 苹果片 x1\n\n> UNKNOWN: no plan item matched list-nutrition-foods. Nothing is asserted.\n\n### Validation\n\n- [x] Products available — 3 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 53.00.\n- [x] Within budget — payable 53.00 leaves 7.00 headroom.\n- [x] Coupon check — No coupon applied — priced at menu value only.\n- [ ] Portions adequate **`UNKNOWN`** — at least 1 main serving(s) for 1 person(s), but this counts an unverified combo as one serving. Resolve the combo composition first. (non-blocking)\n- [x] Exclusions honoured — No exclusions were specified.\n- [ ] Combo composition verified **`UNKNOWN`** — Combo component list was never read from query-meal-detail: 酥脆无双套餐 (C-CRISPY-COMBO). A combo usually bundles its own side and drink — without the component list we cannot tell whether the rest of the plan double-charges them, nor whether the head count is actually covered. Call query-meal-detail with the combo code before this plan can be approved.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `dd7bb7b110a8`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        },
+        {
+          "pr": {
+            "id": "MPR-DEMO-COMBO",
+            "mode": "DEMO",
+            "title": "feat: 一人套餐（已核对组成，移除重复项）",
+            "status": "DRAFT",
+            "version": 2,
+            "userIntent": {
+              "people": 1,
+              "budget": {
+                "currency": "CNY",
+                "max": 60,
+                "min": null
+              },
+              "fulfillment": "pickup",
+              "store": "DEMO-STORE-0004",
+              "preferences": [],
+              "exclusions": [],
+              "nutritionGoals": null,
+              "rawText": "帮我点麦当劳，1 人，60 元以内，到店取餐，尽量划算",
+              "missing": []
+            },
+            "fulfillment": "pickup",
+            "store": {
+              "id": "DEMO-STORE-0004",
+              "name": "DEMO 门店 · 深圳科技园店",
+              "address": "DEMO ADDRESS — placeholder only",
+              "source": "demo"
+            },
+            "items": [
+              {
+                "code": "C-CRISPY-COMBO",
+                "name": "酥脆无双套餐",
+                "category": "combo",
+                "quantity": 1,
+                "options": [],
+                "unitPrice": 36.5,
+                "nutritionRef": null,
+                "comboComposition": {
+                  "components": [
+                    {
+                      "name": "炸鸡",
+                      "category": "main",
+                      "quantity": 1,
+                      "code": null
+                    },
+                    {
+                      "name": "迷你薯条",
+                      "category": "side",
+                      "quantity": 1,
+                      "code": null
+                    },
+                    {
+                      "name": "无糖可乐",
+                      "category": "drink",
+                      "quantity": 1,
+                      "code": null
+                    }
+                  ],
+                  "source": "mcp-detail",
+                  "note": "来自 query-meal-detail(code=C-CRISPY-COMBO) 的占位返回"
+                },
+                "remark": null
+              }
+            ],
+            "coupons": [],
+            "priceQuote": {
+              "currency": "CNY",
+              "subtotal": 36.5,
+              "discountTotal": 0,
+              "deliveryFee": 0,
+              "payable": 36.5,
+              "calculated": true,
+              "source": "demo",
+              "unverifiedReason": null,
+              "quotedAt": "2026-10-10T10:00:00.000Z",
+              "toolCallId": null
+            },
+            "nutritionSummary": {
+              "status": "UNKNOWN",
+              "coverage": 0,
+              "matched": [],
+              "missing": [
+                "酥脆无双套餐 x1"
+              ],
+              "totals": {
+                "energyKcal": null,
+                "proteinG": null,
+                "fatG": null,
+                "carbG": null,
+                "sodiumMg": null,
+                "calciumMg": null
+              },
+              "note": "UNKNOWN: no plan item matched list-nutrition-foods. Nothing is asserted."
+            },
+            "validations": [
+              {
+                "id": "products-available",
+                "label": "Products available",
+                "status": "PASS",
+                "detail": "1 SKU(s) confirmed present in this store's live menu.",
+                "blocking": true
+              },
+              {
+                "id": "price-calculated",
+                "label": "Price calculated",
+                "status": "PASS",
+                "detail": "calculate-price returned payable CNY 36.50.",
+                "blocking": true
+              },
+              {
+                "id": "within-budget",
+                "label": "Within budget",
+                "status": "PASS",
+                "detail": "payable 36.50 leaves 23.50 headroom.",
+                "blocking": true
+              },
+              {
+                "id": "coupons-verified",
+                "label": "Coupon check",
+                "status": "PASS",
+                "detail": "No coupon applied — priced at menu value only.",
+                "blocking": false
+              },
+              {
+                "id": "portions-adequate",
+                "label": "Portions adequate",
+                "status": "PASS",
+                "detail": "1 main(s) for 1 person(s).",
+                "blocking": true
+              },
+              {
+                "id": "exclusions-honoured",
+                "label": "Exclusions honoured",
+                "status": "PASS",
+                "detail": "No exclusions were specified.",
+                "blocking": false
+              },
+              {
+                "id": "combo-composition-verified",
+                "label": "Combo composition verified",
+                "status": "PASS",
+                "detail": "query-meal-detail confirmed: 酥脆无双套餐×1 = 主食×1 + 小食×1 + 饮料×1. Stacking in this plan only covers the real shortfall.",
+                "blocking": true
+              },
+              {
+                "id": "options-legal",
+                "label": "Combo options legal",
+                "status": "PASS",
+                "detail": "No combo substitutions in this plan.",
+                "blocking": false
+              },
+              {
+                "id": "human-approved",
+                "label": "Human approved",
+                "status": "UNKNOWN",
+                "detail": "Awaiting explicit human approval.",
+                "blocking": false
+              }
+            ],
+            "changes": [],
+            "approval": {
+              "approved": false,
+              "version": null,
+              "fingerprint": null,
+              "approvedAt": null,
+              "note": null
+            },
+            "order": {
+              "orderId": null,
+              "status": null,
+              "payable": null,
+              "payUrl": null,
+              "requestFingerprint": null,
+              "createdAt": null,
+              "simulated": false,
+              "attempts": []
+            },
+            "timestamps": {
+              "createdAt": "2026-10-10T10:00:00.000Z",
+              "updatedAt": "2026-10-10T10:00:00.000Z"
+            }
+          },
+          "markdown": "# 🍔 Meal PR #MPR-DEMO-COMBO\n\n## feat: 一人套餐（已核对组成，移除重复项）\n\nStatus: `DRAFT`　|　Mode: `DEMO` — 模拟数据，不涉及真实订单　|　Version: 2\n\n> ⚠️ 本 PR 由 **Demo 模拟数据**生成，所有价格、门店与订单均为占位内容，**不会也不会调用任何真实下单工具**。\n\n### User Requirements\n\n- People: 1\n- Budget: ¥60.00\n- Fulfillment: pickup\n- Store: DEMO 门店 · 深圳科技园店 (`DEMO-STORE-0004`)\n- Preference: none\n- Exclusions: none\n\n### Proposed Changes\n\n+ 酥脆无双套餐 × 1 @ ¥36.50\n  - 套餐组成（已由 `query-meal-detail` 核对）：炸鸡×1、迷你薯条×1、无糖可乐×1\n\n### Price Check\n\n| Item | Amount |\n| --- | --- |\n| Budget | ¥60.00 |\n| Subtotal | ¥36.50 |\n| Discount | -¥0.00 |\n| Delivery fee | ¥0.00 |\n| **Calculated payable** | ¥36.50 |\n| Available budget left | ¥23.50 |\n\n### Coupon Check\n\nApplied: none — priced at menu value only.\n\n### Nutrition Check\n\nStatus: **UNKNOWN** · official coverage 0%\n\n- No official data: 酥脆无双套餐 x1\n\n> UNKNOWN: no plan item matched list-nutrition-foods. Nothing is asserted.\n\n### Validation\n\n- [x] Products available — 1 SKU(s) confirmed present in this store's live menu.\n- [x] Price calculated — calculate-price returned payable CNY 36.50.\n- [x] Within budget — payable 36.50 leaves 23.50 headroom.\n- [x] Coupon check — No coupon applied — priced at menu value only.\n- [x] Portions adequate — 1 main(s) for 1 person(s).\n- [x] Exclusions honoured — No exclusions were specified.\n- [x] Combo composition verified — query-meal-detail confirmed: 酥脆无双套餐×1 = 主食×1 + 小食×1 + 饮料×1. Stacking in this plan only covers the real shortfall.\n- [x] Combo options legal — No combo substitutions in this plan.\n- [ ] Human approved **`UNKNOWN`** — Awaiting explicit human approval. (non-blocking)\n\n### Review\n\n- Current fingerprint: `8b32c05e9ef4`　(mode, store, fulfillment, items, qty, options, coupons, payable)\n\n### Review Actions\n\nAllowed from `DRAFT`: `SUBMIT_FOR_REVIEW`, `REJECT`, `FAIL`\n\nSay one of: _approve this_ / _request changes_ / _reject_ / _show diff_ / _switch to a cheaper option_\n\n---\n\n_MealPR — Don't just order. Review your meal._"
+        }
+      ],
+      "diffs": [
+        {
+          "fromVersion": 1,
+          "toVersion": 2,
+          "summary": {
+            "added": 0,
+            "removed": 2,
+            "quantityChanged": 0,
+            "optionsChanged": 0
+          },
+          "items": [
+            {
+              "kind": "unchanged",
+              "code": "C-CRISPY-COMBO",
+              "name": "酥脆无双套餐",
+              "beforeQty": 1,
+              "afterQty": 1,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "removed",
+              "code": "M-APPLE",
+              "name": "苹果片",
+              "beforeQty": 1,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            },
+            {
+              "kind": "removed",
+              "code": "M-COLA-M",
+              "name": "中杯可乐",
+              "beforeQty": 1,
+              "afterQty": null,
+              "beforeOptions": [],
+              "afterOptions": []
+            }
+          ],
+          "coupons": [],
+          "payable": {
+            "before": 53,
+            "after": 36.5,
+            "changed": true,
+            "verified": true
+          },
+          "discount": {
+            "before": 0,
+            "after": 0,
+            "changed": false,
+            "verified": true
+          },
+          "remainingBudget": {
+            "before": 7,
+            "after": 23.5,
+            "changed": true,
+            "verified": true
+          },
+          "fulfillment": {
+            "before": "pickup",
+            "after": "pickup",
+            "changed": false,
+            "verified": true
+          },
+          "store": {
+            "before": "DEMO-STORE-0004",
+            "after": "DEMO-STORE-0004",
+            "changed": false,
+            "verified": true
+          },
+          "nutrition": {
+            "beforeStatus": "UNKNOWN",
+            "afterStatus": "UNKNOWN",
+            "beforeCoverage": 0,
+            "afterCoverage": 0,
+            "beforeEnergKcal": null,
+            "afterEnergyKcal": null,
+            "note": "Nutrition coverage unchanged."
+          },
+          "unified": "--- Meal PR v1\n+++ Meal PR v2\n@@ Items @@\n  酥脆无双套餐 x1\n- 苹果片 x1  (M-APPLE)\n- 中杯可乐 x1  (M-COLA-M)\n@@ Payment @@\n- Payable: ¥53.00\n+ Payable: ¥36.50\n- Budget left: ¥7.00\n+ Budget left: ¥23.50\n@@ Nutrition @@\n  UNKNOWN -> UNKNOWN :: Nutrition coverage unchanged.\n@@ Result @@\n[ ] No re-review needed\n[x] Re-approval required",
+          "requiresReapproval": true,
+          "reason": "Plan terms changed: the previously granted approval is void and the PR returns to READY_FOR_REVIEW."
+        }
+      ],
+      "executionGuard": {
+        "ok": false,
+        "reason": "demo-mode",
+        "detail": "DEMO PRs can only produce a simulated order; the real create-order tool is never invoked."
+      }
+    }
+  ]
+}

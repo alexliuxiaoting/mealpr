@@ -1,0 +1,28 @@
+{
+  "name": "mealpr",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MealPR — Code Review for Your Meal. A human-in-the-loop Skill that turns McDonald's MCP ordering into a reviewable pull request.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "vitest run",
+    "test:report": "vitest run --reporter=verbose --reporter=json --outputFile.json=test-report.json",
+    "typecheck": "tsc --noEmit",
+    "demo": "node mealpr/scripts/demo.mjs team",
+    "site": "node build.mjs && node scripts/build-site.mjs",
+    "smoke:site": "node scripts/smoke-site.mjs",
+    "zip": "node build.mjs && node scripts/make-zip.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8",
+    "zod": "^3.23.8"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "_disclaimer": "DEMO / 模拟数据。所有商品名、价格、门店、套餐组成均为占位内容，不连接麦当劳 MCP，不产生真实订单。",
+  "id": "demo-combo",
+  "name": "套餐重复计价陷阱",
+  "description": "演示套餐（combo）不能被当作纯主食：未用 query-meal-detail 核对组成前会被自动校验拦下；核对后发现套餐自带小食与饮料，于是移除重复项并重新报价。",
+  "requirement": "帮我点麦当劳，1 人，60 元以内，到店取餐，尽量划算",
+  "store": {
+    "id": "DEMO-STORE-0004",
+    "name": "DEMO 门店 · 深圳科技园店",
+    "address": "DEMO ADDRESS — placeholder only"
+  },
+  "catalog": [
+    { "code": "C-CRISPY-COMBO", "name": "酥脆无双套餐", "category": "combo", "price": 36.5, "available": true },
+    { "code": "M-MCCHICKEN", "name": "麦香鸡", "category": "main", "price": 15.0, "available": true },
+    { "code": "M-FRY-S", "name": "小份薯条", "category": "side", "price": 8.0, "available": true },
+    { "code": "M-APPLE", "name": "苹果片", "category": "side", "price": 6.5, "available": true },
+    { "code": "M-COLA-M", "name": "中杯可乐", "category": "drink", "price": 10.0, "available": true }
+  ],
+  "nutritionTable": [
+    { "code": "M-MCCHICKEN", "energyKcal": 401, "proteinG": 18.2, "fatG": 19.4, "carbG": 38.1, "sodiumMg": 780, "calciumMg": 120 },
+    { "code": "M-FRY-S", "energyKcal": 230, "proteinG": 3.0, "fatG": 11.0, "carbG": 30.0, "sodiumMg": 180, "calciumMg": 5 }
+  ],
+  "initial": {
+    "title": "feat: 一人套餐（未核对组成）",
+    "items": [
+      { "code": "C-CRISPY-COMBO", "quantity": 1, "comboComposition": null },
+      { "code": "M-COLA-M", "quantity": 1 },
+      { "code": "M-APPLE", "quantity": 1 }
+    ],
+    "coupons": [],
+    "quote": { "subtotal": 53.0, "discountTotal": 0.0, "deliveryFee": 0.0, "payable": 53.0, "calculated": true }
+  },
+  "revisions": [
+    {
+      "request": "先用 query-meal-detail 核对这个套餐里到底有什么，别重复计价",
+      "title": "feat: 一人套餐（已核对组成，移除重复项）",
+      "items": [
+        {
+          "code": "C-CRISPY-COMBO",
+          "quantity": 1,
+          "comboComposition": {
+            "components": [
+              { "name": "炸鸡", "category": "main", "quantity": 1 },
+              { "name": "迷你薯条", "category": "side", "quantity": 1 },
+              { "name": "无糖可乐", "category": "drink", "quantity": 1 }
+            ],
+            "source": "mcp-detail",
+            "note": "来自 query-meal-detail(code=C-CRISPY-COMBO) 的占位返回"
+          }
+        }
+      ],
+      "coupons": [],
+      "quote": { "subtotal": 36.5, "discountTotal": 0.0, "deliveryFee": 0.0, "payable": 36.5, "calculated": true }
+    }
+  ],
+  "simulatedOrder": { "orderId": "DEMO-ORDER-000004", "status": "CREATED", "simulated": true }
+}

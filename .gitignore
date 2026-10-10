@@ -1,0 +1,14 @@
+node_modules/
+.npm-cache/
+test-report.json
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+dist/*.zip
+
+# never commit real tokens or personal data
+*token*.local
+.mcp.json
+mcp-config.local.json

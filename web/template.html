@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MealPR — Code Review for Your Meal</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --border: #e4e6eb;
+    --border-strong: #d4d7dd;
+    --text: #1f2328;
+    --muted: #656d76;
+    --link: #0969da;
+    --green: #1a7f37;
+    --green-bg: #e8f8ec;
+    --red: #cf222e;
+    --red-bg: #fdeceb;
+    --amber: #9a6700;
+    --amber-bg: #fdf4d6;
+    --purple: #8250df;
+    --purple-bg: #f3eeff;
+    --warm: #c2410c;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+  .topbar {
+    background: linear-gradient(180deg, #ffffff, #fbfbfc);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  }
+  .brand { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; }
+  .brand .crumb { color: var(--muted); font-weight: 400; }
+  .slogan { color: var(--muted); font-size: 12.5px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 18px; align-items: start; }
+  @media (max-width: 980px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+  .card + .card { margin-top: 14px; }
+  .card-head {
+    padding: 11px 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-weight: 600; font-size: 13.5px;
+  }
+  .card-body { padding: 14px 16px; }
+  .card-body.tight { padding: 8px 16px 14px; }
+
+  .pr-title { font-size: 22px; font-weight: 650; margin: 0 0 8px; line-height: 1.35; letter-spacing: -0.01em; }
+  .pr-sub { color: var(--muted); font-size: 13px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    border: 1px solid transparent; white-space: nowrap;
+  }
+  .pill.open { background: var(--green-bg); color: var(--green); border-color: #b7e3c4; }
+  .pill.draft { background: #f0f1f3; color: var(--muted); border-color: var(--border-strong); }
+  .pill.changes { background: var(--amber-bg); color: var(--amber); border-color: #ecd9a0; }
+  .pill.approved { background: var(--purple-bg); color: var(--purple); border-color: #d9c9f6; }
+  .pill.done { background: #eaf3fd; color: var(--link); border-color: #c3ddf8; }
+  .pill.dead { background: var(--red-bg); color: var(--red); border-color: #f3c6c4; }
+  .pill.demo { background: #fff2e8; color: var(--warm); border-color: #f7d3bb; }
+
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 14px; flex-wrap: wrap; }
+  .tab {
+    appearance: none; background: none; border: 0; border-bottom: 2px solid transparent;
+    padding: 8px 12px; font: inherit; font-weight: 600; font-size: 13px; color: var(--muted);
+    cursor: pointer; border-radius: 8px 8px 0 0;
+  }
+  .tab[aria-selected="true"] { color: var(--text); border-bottom-color: #fd8c73; }
+  .tab:hover { background: #f0f1f3; }
+
+  .timeline { display: flex; flex-direction: column; gap: 12px; }
+  .comment { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+    background: #eef0f3; color: var(--muted); font-size: 13px; font-weight: 700;
+  }
+  .comment-box { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: #fff; }
+  .comment-head { background: #f6f8fa; border-bottom: 1px solid var(--border); padding: 7px 12px; font-size: 12.5px; color: var(--muted); }
+  .comment-head b { color: var(--text); font-weight: 600; }
+  .comment-body { padding: 12px 14px; }
+  .comment-box.blocked { border-color: #f3c6c4; }
+  .comment-box.blocked .comment-head { background: var(--red-bg); color: var(--red); }
+  .comment-box.ok { border-color: #b7e3c4; }
+  .comment-box.ok .comment-head { background: var(--green-bg); color: var(--green); }
+  .comment-box.sim { border-color: #f7d3bb; }
+  .comment-box.sim .comment-head { background: #fff2e8; color: var(--warm); }
+
+  table.kv { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.kv td { padding: 5px 0; border-bottom: 1px dashed #eef0f3; }
+  table.kv td:first-child { color: var(--muted); width: 42%; }
+  table.kv td:last-child { text-align: right; font-weight: 600; }
+  table.kv tr:last-child td { border-bottom: 0; }
+
+  .items { list-style: none; margin: 0; padding: 0; }
+  .items li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px dashed #eef0f3; align-items: flex-start; }
+  .items li:last-child { border-bottom: 0; }
+  .sign { font-weight: 700; width: 14px; flex: none; text-align: center; }
+  .sign.add { color: var(--green); }
+  .sign.del { color: var(--red); }
+  .compo { margin-left: 22px; font-size: 12.5px; color: var(--muted); }
+  .compo.warn { color: var(--amber); }
+
+  .checks { list-style: none; margin: 0; padding: 0; }
+  .checks li { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0f1f3; align-items: flex-start; }
+  .checks li:last-child { border-bottom: 0; }
+  .dot { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; flex: none; margin-top: 1px; }
+  .dot.PASS { background: var(--green-bg); color: var(--green); }
+  .dot.FAIL { background: var(--red-bg); color: var(--red); }
+  .dot.WARN { background: var(--amber-bg); color: var(--amber); }
+  .dot.UNKNOWN { background: #f0f1f3; color: var(--muted); }
+  .check-label { font-weight: 600; }
+  .check-detail { color: var(--muted); font-size: 12.5px; }
+  .tag { font-size: 11px; padding: 1px 6px; border-radius: 999px; background: #f0f1f3; color: var(--muted); margin-left: 6px; }
+
+  pre.diff {
+    margin: 0; padding: 0; font-size: 12.5px; line-height: 1.7; overflow-x: auto;
+    border-radius: 0 0 var(--radius) var(--radius); background: #fff;
+  }
+  pre.diff div { padding: 0 12px; white-space: pre; }
+  pre.diff .add { background: var(--green-bg); color: #116329; }
+  pre.diff .del { background: var(--red-bg); color: #a40e26; }
+  pre.diff .hunk { background: #eff3f8; color: var(--muted); }
+  pre.diff .ctx { color: #444c56; }
+
+  .side-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .btn {
+    appearance: none; width: 100%; text-align: left; font: inherit; font-weight: 600; font-size: 13px;
+    padding: 9px 12px; border-radius: 9px; border: 1px solid var(--border-strong);
+    background: #fff; color: var(--text); cursor: pointer; margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+  .btn:hover:not(:disabled) { background: #f6f8fa; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn.primary { background: var(--green); border-color: var(--green); color: #fff; }
+  .btn.primary:hover:not(:disabled) { background: #1c8b3d; }
+  .btn.danger { color: var(--red); }
+  .btn.sim { background: #fff7f2; border-color: #f7d3bb; color: var(--warm); }
+  .btn .hint { font-size: 11px; font-weight: 500; color: var(--muted); }
+  .btn.primary .hint { color: #d7f2df; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    appearance: none; font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--border-strong); background: #fff; cursor: pointer; color: var(--muted);
+  }
+  .chip[aria-pressed="true"] { background: var(--text); color: #fff; border-color: var(--text); }
+  .note { font-size: 12.5px; color: var(--muted); }
+  .warnbox { background: #fff8ef; border: 1px solid #f7d3bb; border-radius: 10px; padding: 10px 12px; font-size: 12.5px; color: var(--warm); }
+  .fp { font-size: 11.5px; word-break: break-all; }
+  details.md summary { cursor: pointer; font-weight: 600; font-size: 13px; margin-bottom: 8px; }
+  details.md pre { background: #f6f8fa; border: 1px solid var(--border); border-radius: 10px; padding: 12px; overflow: auto; max-height: 420px; font-size: 12px; }
+  footer.foot { max-width: 1180px; margin: 0 auto; padding: 8px 20px 40px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="brand"><span class="crumb">mealpr / </span>order-review</span>
+  <span class="slogan">Don&rsquo;t just order. Review your meal.</span>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div>
+      <div class="card">
+        <div class="card-body">
+          <h1 class="pr-title" id="prTitle">&mdash;</h1>
+          <div class="pr-sub" id="prSub"></div>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-tab="conversation">💬 Conversation</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="files">📝 Files changed</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="checks">✅ Checks</button>
+      </div>
+
+      <section id="tab-conversation">
+        <div class="card">
+          <div class="card-head">🤖 mealpr-bot 提交了这份 Meal PR</div>
+          <div class="card-body" id="proposal"></div>
+        </div>
+        <div class="timeline" id="timeline" style="margin-top:14px"></div>
+      </section>
+
+      <section id="tab-files" hidden>
+        <div class="card">
+          <div class="card-head" id="diffHead">Files changed</div>
+          <pre class="diff" id="diffBody"></pre>
+        </div>
+      </section>
+
+      <section id="tab-checks" hidden>
+        <div class="card">
+          <div class="card-head" id="checksHead">Checks</div>
+          <div class="card-body tight"><ul class="checks" id="checksBody"></ul></div>
+        </div>
+      </section>
+    </div>
+
+    <aside>
+      <div class="card">
+        <div class="card-head">🎬 Demo 场景</div>
+        <div class="card-body">
+          <div class="chips" id="scenarioChips"></div>
+          <p class="note" id="scenarioDesc" style="margin:10px 0 0"></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">🧾 版本</div>
+        <div class="card-body">
+          <div class="chips" id="versionChips"></div>
+          <p class="note" style="margin:10px 0 0">切换版本会重新载入该版本的原始 PR 对象。</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">👤 User requirements</div>
+        <div class="card-body"><table class="kv" id="intentTable"></table></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">🔎 Review actions</div>
+        <div class="card-body" id="actions"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">🛡️ Execution gate</div>
+        <div class="card-body">
+          <div id="gateBox" class="warnbox"></div>
+          <p class="fp mono" id="fingerprint" style="margin:10px 0 0"></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer class="foot">
+  MealPR — <span class="mono">Propose → Validate → Review → Approve → Execute</span>。
+  本页面使用与 Skill 完全相同的核心逻辑（状态机、校验、执行闸门）渲染；数据全部为内置 Demo fixture，未连接麦当劳 MCP，未创建任何订单。
+</footer>
+
+<script>/*__MEALPR_CORE_JS__*/</script>
+<script>window.__MEALPR_DATA__ = /*__MEALPR_DATA_JSON__*/;</script>
+<script>
+(function () {
+  'use strict';
+  var CORE = window.MealPR;
+  var DATA = window.__MEALPR_DATA__;
+  var state = { s: 1, v: 0, pr: null, timeline: [] };
+
+  var el = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+  var money = function (cur, v) { return v == null ? 'unknown' : (cur === 'CNY' ? '¥' : cur + ' ') + Number(v).toFixed(2); };
+
+  var STATUS_CLASS = {
+    DRAFT: 'draft', READY_FOR_REVIEW: 'open', CHANGES_REQUESTED: 'changes',
+    APPROVED: 'approved', ORDER_CREATED: 'done', PAYMENT_PENDING: 'done',
+    REJECTED: 'dead', FAILED: 'dead'
+  };
+  var STATUS_TEXT = {
+    DRAFT: 'Draft', READY_FOR_REVIEW: 'Ready for review', CHANGES_REQUESTED: 'Changes requested',
+    APPROVED: 'Approved', ORDER_CREATED: 'Order created', PAYMENT_PENDING: 'Payment pending',
+    REJECTED: 'Rejected', FAILED: 'Failed'
+  };
+
+  function scenario() { return DATA.scenarios[state.s]; }
+
+  function loadVersion() {
+    var sc = scenario();
+    state.pr = JSON.parse(JSON.stringify(sc.versions[state.v].pr));
+    state.timeline = [{
+      kind: 'proposal',
+      who: 'mealpr-bot',
+      head: '提交了 v' + state.pr.version + ' — 等待人工审核',
+      body: '本方案的全部数值来自 Demo fixture 投影（等价 Skill 里的 MCP 校验结果）。在人类批准之前，它不会被提交成订单。'
+    }];
+    render();
+  }
+
+  function push(entry) { state.timeline.push(entry); }
+
+  /* ---------------------------------------------------------------- */
+  /* Rendering                                                         */
+  /* ---------------------------------------------------------------- */
+
+  function render() {
+    var pr = state.pr;
+    el('prTitle').textContent = pr.title;
+    el('prSub').innerHTML = [
+      '<span class="pill ' + (STATUS_CLASS[pr.status] || 'draft') + '">' + (STATUS_TEXT[pr.status] || pr.status) + '</span>',
+      '<span class="pill demo">DEMO · 模拟数据</span>',
+      '<span>#' + esc(pr.id) + '</span>',
+      '<span>v' + pr.version + '</span>',
+      '<span>' + esc(pr.store ? pr.store.name : 'unresolved store') + '</span>'
+    ].join(' ');
+
+    renderProposal();
+    renderTimeline();
+    renderFiles();
+    renderChecks();
+    renderSide();
+  }
+
+  function renderProposal() {
+    var pr = state.pr, q = pr.priceQuote, it = pr.userIntent;
+    var cap = it.budget.max;
+    var payable = q.calculated ? q.payable : null;
+    var left = payable != null && cap != null ? Number((cap - payable).toFixed(2)) : null;
+    var cur = q.currency || 'CNY';
+
+    var items = pr.items.map(function (i) {
+      var compo = '';
+      if (i.category === 'combo') {
+        var c = i.comboComposition;
+        if (c && c.source === 'mcp-detail') {
+          compo = '<div class="compo">套餐组成（query-meal-detail 已核对）：' +
+            esc(c.components.map(function (x) { return x.name + '×' + x.quantity; }).join('、')) + '</div>';
+        } else {
+          compo = '<div class="compo warn">⚠️ 套餐组成未核对，需先调用 query-meal-detail(code="' + esc(i.code) + '")</div>';
+        }
+      }
+      return '<li><span class="sign add">+</span><div><div>' + esc(i.name) + ' × ' + i.quantity +
+        (i.unitPrice != null ? ' <span class="note">@ ' + money(cur, i.unitPrice) + '</span>' : '') +
+        '</div>' + compo + '</div></li>';
+    }).join('');
+
+    var rows = [
+      ['Budget', cap == null ? 'unset' : money(cur, cap)],
+      ['Subtotal', money(cur, q.subtotal)],
+      ['Discount', q.discountTotal == null ? 'unknown' : '-' + money(cur, q.discountTotal)],
+      ['Delivery fee', q.deliveryFee == null ? 'n/a' : money(cur, q.deliveryFee)],
+      ['Calculated payable', q.calculated ? money(cur, payable) : 'unknown — 未调用 calculate-price'],
+      ['Budget left', left == null ? 'unknown' : money(cur, left)]
+    ].map(function (r) {
+      return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+    }).join('');
+
+    var coupons = pr.coupons.length === 0
+      ? '<p class="note">Applied: none — priced at menu value only.</p>'
+      : '<ul class="items">' + pr.coupons.map(function (c) {
+          return '<li><span class="sign">·</span><div>' + esc(c.name) +
+            (c.verified ? ' <span class="tag">verified</span>' : ' <span class="tag">unverified</span>') + '</div></li>';
+        }).join('') + '</ul>';
+
+    var n = pr.nutritionSummary || {};
+    var nutrition = '<p class="note">Status <b>' + esc(n.status) + '</b> · official coverage ' +
+      Math.round((n.coverage || 0) * 100) + '%' + (n.note ? '<br>' + esc(n.note) : '') + '</p>';
+
+    el('proposal').innerHTML =
+      '<p class="side-label">Proposed changes</p><ul class="items">' + (items || '<li class="note">（空方案）</li>') + '</ul>' +
+      '<p class="side-label" style="margin-top:16px">Price check</p><table class="kv">' + rows + '</table>' +
+      (q.calculated ? '' : '<p class="warnbox" style="margin-top:10px">应付金额未经 calculate-price 校验，本 PR 不得进入可批准状态。</p>') +
+      '<p class="side-label" style="margin-top:16px">Coupon check</p>' + coupons +
+      '<p class="side-label" style="margin-top:16px">Nutrition check</p>' + nutrition +
+      '<details class="md" style="margin-top:16px"><summary>查看渲染后的 PR Markdown（由核心 renderPR 实时生成）</summary><pre>' +
+      esc(CORE.renderPR(pr)) + '</pre></details>';
+  }
+
+  function renderTimeline() {
+    el('timeline').innerHTML = state.timeline.map(function (e) {
+      var cls = e.kind === 'blocked' ? 'blocked' : (e.kind === 'sim' ? 'sim' : (e.kind === 'ok' ? 'ok' : ''));
+      return '<div class="comment"><div class="avatar">' + esc((e.who || 'u')[0].toUpperCase()) + '</div>' +
+        '<div class="comment-box ' + cls + '"><div class="comment-head"><b>' + esc(e.who) + '</b> · ' + esc(e.head) + '</div>' +
+        '<div class="comment-body">' + e.body + '</div></div></div>';
+    }).join('');
+  }
+
+  function renderFiles() {
+    var sc = scenario();
+    var d = state.v > 0 ? sc.diffs[state.v - 1] : null;
+    if (!d) {
+      el('diffHead').textContent = 'Files changed — 这是第一个版本，没有历史 diff';
+      el('diffBody').innerHTML = '<div class="ctx">  (no previous version to compare)</div>';
+      return;
+    }
+    el('diffHead').textContent = 'Files changed — v' + d.fromVersion + ' → v' + d.toVersion +
+      '（+' + d.summary.added + ' / −' + d.summary.removed + ' / ~' + d.summary.quantityChanged + '）';
+    el('diffBody').innerHTML = d.unified.split('\n').map(function (line) {
+      var c = line[0] === '+' ? 'add' : (line[0] === '-' ? 'del' : (line[0] === '@' ? 'hunk' : 'ctx'));
+      return '<div class="' + c + '">' + esc(line) + '</div>';
+    }).join('');
+  }
+
+  function renderChecks() {
+    var pr = state.pr;
+    var blockingBad = pr.validations.filter(function (c) { return c.blocking && c.status !== 'PASS'; });
+    el('checksHead').textContent = 'Checks — ' + pr.validations.length + ' total' +
+      (blockingBad.length ? ' · ' + blockingBad.length + ' blocking unresolved' : ' · all blocking checks green');
+    el('checksBody').innerHTML = pr.validations.map(function (c) {
+      return '<li><span class="dot ' + c.status + '">' + (c.status === 'PASS' ? '✓' : (c.status === 'FAIL' ? '✕' : '?')) + '</span>' +
+        '<div><span class="check-label">' + esc(c.label) + '</span>' +
+        (c.blocking ? '<span class="tag">blocking</span>' : '<span class="tag">non-blocking</span>') +
+        '<div class="check-detail">' + esc(c.detail) + '</div></div></li>';
+    }).join('') || '<li class="note">（无校验项）</li>';
+  }
+
+  function renderSide() {
+    var pr = state.pr, it = pr.userIntent;
+    var cur = pr.priceQuote.currency || 'CNY';
+
+    el('scenarioChips').innerHTML = DATA.scenarios.map(function (s, i) {
+      return '<button class="chip" data-s="' + i + '" aria-pressed="' + (i === state.s) + '">' + esc(s.name) + '</button>';
+    }).join('');
+    el('scenarioDesc').textContent = scenario().description;
+
+    el('versionChips').innerHTML = scenario().versions.map(function (v, i) {
+      return '<button class="chip" data-v="' + i + '" aria-pressed="' + (i === state.v) + '">v' + v.pr.version + '</button>';
+    }).join('');
+
+    el('intentTable').innerHTML = [
+      ['People', it.people == null ? 'unknown' : it.people],
+      ['Budget', it.budget.max == null ? 'unset' : money(cur, it.budget.max)],
+      ['Fulfillment', pr.fulfillment || 'unresolved'],
+      ['Store', pr.store ? pr.store.name : 'unresolved'],
+      ['Preference', it.preferences.length ? it.preferences.join(', ') : 'none'],
+      ['Exclusions', it.exclusions.length ? it.exclusions.join(', ') : 'none']
+    ].map(function (r) { return '<tr><td>' + esc(String(r[0])) + '</td><td>' + esc(String(r[1])) + '</td></tr>'; }).join('');
+
+    var ACTIONS = [
+      { a: 'SUBMIT_FOR_REVIEW', label: '提交审核', hint: 'DRAFT → READY_FOR_REVIEW' },
+      { a: 'APPROVE', label: '批准这个版本', hint: '绑定指纹到当前方案', primary: true },
+      { a: 'REQUEST_CHANGES', label: '请求修改', hint: '旧批准立即失效' },
+      { a: 'REJECT', label: '放弃这个方案', hint: '→ REJECTED', danger: true }
+    ];
+    var html = ACTIONS.map(function (x) {
+      var allowed = CORE.canTransition(pr.status, x.a);
+      return '<button class="btn' + (x.primary ? ' primary' : '') + (x.danger ? ' danger' : '') +
+        '" data-action="' + x.a + '"' + (allowed ? '' : ' disabled') + '>' +
+        '<span>' + x.label + '</span><span class="hint">' + (allowed ? x.hint : '当前状态不允许') + '</span></button>';
+    }).join('');
+    html += '<button class="btn sim" data-action="SIMULATE_ORDER">模拟下单（DEMO）<span class="hint">真实 create-order 会被闸门拒绝</span></button>';
+    el('actions').innerHTML = html;
+
+    var gate = CORE.assertExecutable(pr);
+    el('gateBox').innerHTML = gate.ok
+      ? '<b>ok</b> — 所有执行前置条件满足'
+      : '<b>' + esc(gate.reason) + '</b><br>' + esc(gate.detail);
+    el('fingerprint').textContent = 'fingerprint ' + CORE.shortFingerprint(CORE.computeFingerprint(pr));
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Interaction — every button runs the real core                     */
+  /* ---------------------------------------------------------------- */
+
+  function doAction(action) {
+    var pr = state.pr;
+    if (action === 'SIMULATE_ORDER') {
+      var guard = CORE.assertExecutable(pr);
+      push({
+        kind: 'blocked', who: 'execution-gate', head: '真实下单前先跑 assertExecutable',
+        body: '<pre style="margin:0;font-size:12px">' + esc(JSON.stringify(guard, null, 2)) + '</pre>' +
+          (guard.ok ? '' : '<p style="margin:10px 0 0">因此真实 <code>create-order</code> 工具<b>不会被调用</b>。下面只是把状态标记为模拟订单。</p>')
+      });
+      if (!guard.ok) {
+        state.pr = JSON.parse(JSON.stringify(pr));
+        state.pr.status = 'ORDER_CREATED';
+        state.pr.order = {
+          orderId: scenario().simulatedOrder.orderId, status: scenario().simulatedOrder.status,
+          payable: pr.priceQuote.payable, payUrl: null, requestFingerprint: CORE.computeFingerprint(pr),
+          createdAt: new Date().toISOString(), simulated: true,
+          attempts: [{ at: new Date().toISOString(), requestFingerprint: CORE.computeFingerprint(pr), outcome: 'SUCCESS', orderId: scenario().simulatedOrder.orderId, message: 'SIMULATED — no MCP tool was invoked' }]
+        };
+        push({ kind: 'sim', who: 'demo-runner', head: '模拟订单 ' + scenario().simulatedOrder.orderId, body: '订单号带 <code>DEMO-</code> 前缀，不产生支付链接，没有任何 MCP 写操作。' });
+      }
+      render();
+      return;
+    }
+
+    var res = CORE.applyAction(pr, action, { note: 'clicked in the review page' });
+    if (!res.ok) {
+      push({ kind: 'blocked', who: 'mealpr-core', head: action + ' 被拒绝', body: '<code>' + esc(res.message) + '</code>' });
+    } else {
+      state.pr = res.pr;
+      push({
+        kind: 'ok', who: 'you', head: action + ' — 状态现在是 ' + res.pr.status,
+        body: '<code>' + esc(res.message) + '</code>' +
+          (action === 'APPROVE' ? '<p style="margin:8px 0 0">批准已绑定到指纹 <code>' + esc(CORE.shortFingerprint(res.pr.approval.fingerprint)) + '</code>。此后任何商品、数量、门店、配送方式或金额变化都会让这份批准自动失效。</p>' : '')
+      });
+    }
+    render();
+  }
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target.closest('[data-action],[data-s],[data-v],[data-tab]');
+    if (!t) return;
+    if (t.hasAttribute('data-tab')) {
+      var name = t.getAttribute('data-tab');
+      ['conversation', 'files', 'checks'].forEach(function (n) {
+        el('tab-' + n).hidden = n !== name;
+      });
+      document.querySelectorAll('.tab').forEach(function (b) {
+        b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === name));
+      });
+      return;
+    }
+    if (t.hasAttribute('data-s')) { state.s = Number(t.getAttribute('data-s')); state.v = 0; loadVersion(); return; }
+    if (t.hasAttribute('data-v')) { state.v = Number(t.getAttribute('data-v')); loadVersion(); return; }
+    if (t.hasAttribute('data-action')) doAction(t.getAttribute('data-action'));
+  });
+
+  loadVersion();
+})();
+</script>
+</body>
+</html>

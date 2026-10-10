@@ -1,0 +1,50 @@
+{
+  "_disclaimer": "DEMO / 模拟数据。所有商品名、价格、门店、优惠券均为占位内容，不连接麦当劳 MCP，不产生真实订单。",
+  "id": "demo-single",
+  "name": "单人预算餐",
+  "description": "一个人、¥40 以内、到店取餐，演示「提出 → 校验 → 修改 → Diff → 批准 → 模拟下单」的最小闭环。",
+  "requirement": "今天加班，帮我安排一个 40 元以内的麦当劳晚餐，尽量有肉、有饮料，到店取餐。",
+  "store": {
+    "id": "DEMO-STORE-0001",
+    "name": "DEMO 门店 · 深圳科技园店",
+    "address": "DEMO ADDRESS — placeholder only"
+  },
+  "catalog": [
+    { "code": "M-BIGMAC", "name": "巨无霸", "category": "main", "price": 24.5, "available": true },
+    { "code": "M-MCCHICKEN", "name": "麦香鸡", "category": "main", "price": 15.0, "available": true },
+    { "code": "M-SPICYCHICKEN", "name": "麦辣鸡腿堡", "category": "main", "price": 21.0, "available": true },
+    { "code": "M-FRY-M", "name": "中份薯条", "category": "side", "price": 11.0, "available": true },
+    { "code": "M-NUGGET-5", "name": "麦乐鸡（5 块）", "category": "side", "price": 11.5, "available": true },
+    { "code": "M-COLA-M", "name": "中杯可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-COLA-ZERO-M", "name": "中杯无糖可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-WATER", "name": "矿泉水", "category": "drink", "price": 6.0, "available": true },
+    { "code": "M-CONE", "name": "甜筒", "category": "dessert", "price": 5.0, "available": true }
+  ],
+  "nutritionTable": [
+    { "code": "M-MCCHICKEN", "energyKcal": 401, "proteinG": 18.2, "fatG": 19.4, "carbG": 38.1, "sodiumMg": 780, "calciumMg": 120 },
+    { "code": "M-FRY-M", "energyKcal": 337, "proteinG": 4.2, "fatG": 16.1, "carbG": 43.7, "sodiumMg": 260, "calciumMg": 8 }
+  ],
+  "initial": {
+    "title": "feat: 加班单人晚餐，控制在 ¥40 以内",
+    "items": [
+      { "code": "M-MCCHICKEN", "quantity": 1 },
+      { "code": "M-FRY-M", "quantity": 1 },
+      { "code": "M-COLA-M", "quantity": 1 }
+    ],
+    "coupons": [],
+    "quote": { "subtotal": 36.0, "discountTotal": 0.0, "deliveryFee": 0.0, "payable": 36.0, "calculated": true }
+  },
+  "revisions": [
+    {
+      "request": "饮料换成无糖的，薯条不要了",
+      "title": "feat: 加班单人晚餐 v2 —— 无糖饮料 + 去掉薯条",
+      "items": [
+        { "code": "M-MCCHICKEN", "quantity": 1 },
+        { "code": "M-COLA-ZERO-M", "quantity": 1 }
+      ],
+      "coupons": [],
+      "quote": { "subtotal": 25.0, "discountTotal": 0.0, "deliveryFee": 0.0, "payable": 25.0, "calculated": true }
+    }
+  ],
+  "simulatedOrder": { "orderId": "DEMO-ORDER-000001", "status": "CREATED", "simulated": true }
+}

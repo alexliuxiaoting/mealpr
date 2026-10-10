@@ -1,0 +1,64 @@
+{
+  "_disclaimer": "DEMO / 模拟数据。演示优惠券失效后重新报价 —— 同一组合去掉券后超出预算，MealPR 会阻止提交而不是擅自放宽约束。",
+  "id": "demo-coupon-expired",
+  "name": "优惠券失效后重新报价",
+  "description": "带券方案原本在预算内，券失效后按原价重算会超预算；系统必须阻止进入待审核，再由用户降级菜品后重新提案。",
+  "requirement": "我和同事 2 人吃饭，预算 70 元以内，用上那张双人券，到店取餐。",
+  "store": {
+    "id": "DEMO-STORE-0003",
+    "name": "DEMO 门店 · 北京中关村店",
+    "address": "DEMO ADDRESS — placeholder only"
+  },
+  "catalog": [
+    { "code": "M-BIGMAC", "name": "巨无霸", "category": "main", "price": 24.5, "available": true },
+    { "code": "M-MCCHICKEN", "name": "麦香鸡", "category": "main", "price": 15.0, "available": true },
+    { "code": "M-GRILLEDCHICKEN", "name": "板烧鸡腿堡", "category": "main", "price": 22.0, "available": true },
+    { "code": "M-FRY-M", "name": "中份薯条", "category": "side", "price": 11.0, "available": true },
+    { "code": "M-COLA-M", "name": "中杯可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-COLA-ZERO-M", "name": "中杯无糖可乐", "category": "drink", "price": 10.0, "available": true }
+  ],
+  "nutritionTable": [
+    { "code": "M-BIGMAC", "energyKcal": 550, "proteinG": 26.3, "fatG": 30.5, "carbG": 44.1, "sodiumMg": 1050, "calciumMg": 260 },
+    { "code": "M-MCCHICKEN", "energyKcal": 401, "proteinG": 18.2, "fatG": 19.4, "carbG": 38.1, "sodiumMg": 780, "calciumMg": 120 },
+    { "code": "M-FRY-M", "energyKcal": 337, "proteinG": 4.2, "fatG": 16.1, "carbG": 43.7, "sodiumMg": 260, "calciumMg": 8 },
+    { "code": "M-COLA-M", "energyKcal": 148, "proteinG": 0.0, "fatG": 0.0, "carbG": 37.0, "sodiumMg": 15, "calciumMg": 0 }
+  ],
+  "initial": {
+    "title": "feat: 双人套餐 + 双人券（¥70 以内）",
+    "items": [
+      { "code": "M-BIGMAC", "quantity": 2 },
+      { "code": "M-FRY-M", "quantity": 1 },
+      { "code": "M-COLA-M", "quantity": 2 }
+    ],
+    "coupons": [
+      { "id": "DEMO-COUPON-EXPIRED-12", "name": "DEMO 券 · 双人餐立减 ¥12", "discountAmount": 12.0, "verified": true, "note": "占位优惠券，稍后会在 Demo 中失效" }
+    ],
+    "quote": { "subtotal": 80.0, "discountTotal": 12.0, "deliveryFee": 0.0, "payable": 68.0, "calculated": true }
+  },
+  "revisions": [
+    {
+      "request": "这张券刚才提示不可用了，去掉优惠券按原价重新算一遍价格",
+      "title": "fix: 优惠券不可用 —— 按原价重新报价",
+      "items": [
+        { "code": "M-BIGMAC", "quantity": 2 },
+        { "code": "M-FRY-M", "quantity": 1 },
+        { "code": "M-COLA-M", "quantity": 2 }
+      ],
+      "coupons": [],
+      "quote": { "subtotal": 80.0, "discountTotal": 0.0, "deliveryFee": 0.0, "payable": 80.0, "calculated": true },
+      "expect": "submit-blocked"
+    },
+    {
+      "request": "那就主食换成麦香鸡，控制在预算内",
+      "title": "feat: 双人套餐 v3 —— 券失效后改用更低价主食",
+      "items": [
+        { "code": "M-MCCHICKEN", "quantity": 2 },
+        { "code": "M-FRY-M", "quantity": 1 },
+        { "code": "M-COLA-M", "quantity": 2 }
+      ],
+      "coupons": [],
+      "quote": { "subtotal": 61.0, "discountTotal": 0.0, "deliveryFee": 0.0, "payable": 61.0, "calculated": true }
+    }
+  ],
+  "simulatedOrder": { "orderId": "DEMO-ORDER-000003", "status": "CREATED", "simulated": true }
+}

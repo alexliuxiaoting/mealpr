@@ -1,0 +1,60 @@
+{
+  "_disclaimer": "DEMO / 模拟数据。所有商品名、价格、门店、优惠券均为占位内容，不连接麦当劳 MCP，不产生真实订单。",
+  "id": "demo-team",
+  "name": "双人庆功餐",
+  "description": "两人的项目上线庆功餐，¥70 以内，带一张模拟优惠券，演示带券报价与预算收紧后的重新提案。",
+  "requirement": "项目上线了，帮我和同事配一顿麦当劳，2 人，70 元以内，优先用优惠券，到店取餐。",
+  "store": {
+    "id": "DEMO-STORE-0002",
+    "name": "DEMO 门店 · 上海张江店",
+    "address": "DEMO ADDRESS — placeholder only"
+  },
+  "catalog": [
+    { "code": "M-BIGMAC", "name": "巨无霸", "category": "main", "price": 24.5, "available": true },
+    { "code": "M-MCCHICKEN", "name": "麦香鸡", "category": "main", "price": 15.0, "available": true },
+    { "code": "M-GRILLEDCHICKEN", "name": "板烧鸡腿堡", "category": "main", "price": 22.0, "available": true },
+    { "code": "M-SPICYCHICKEN", "name": "麦辣鸡腿堡", "category": "main", "price": 21.0, "available": true },
+    { "code": "M-FRY-M", "name": "中份薯条", "category": "side", "price": 11.0, "available": true },
+    { "code": "M-NUGGET-5", "name": "麦乐鸡（5 块）", "category": "side", "price": 11.5, "available": true },
+    { "code": "M-COLA-M", "name": "中杯可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-COLA-ZERO-M", "name": "中杯无糖可乐", "category": "drink", "price": 10.0, "available": true },
+    { "code": "M-CONE", "name": "甜筒", "category": "dessert", "price": 5.0, "available": true }
+  ],
+  "nutritionTable": [
+    { "code": "M-MCCHICKEN", "energyKcal": 401, "proteinG": 18.2, "fatG": 19.4, "carbG": 38.1, "sodiumMg": 780, "calciumMg": 120 },
+    { "code": "M-BIGMAC", "energyKcal": 550, "proteinG": 26.3, "fatG": 30.5, "carbG": 44.1, "sodiumMg": 1050, "calciumMg": 260 },
+    { "code": "M-GRILLEDCHICKEN", "energyKcal": 404, "proteinG": 24.6, "fatG": 17.2, "carbG": 36.4, "sodiumMg": 890, "calciumMg": 150 },
+    { "code": "M-FRY-M", "energyKcal": 337, "proteinG": 4.2, "fatG": 16.1, "carbG": 43.7, "sodiumMg": 260, "calciumMg": 8 },
+    { "code": "M-COLA-M", "energyKcal": 148, "proteinG": 0.0, "fatG": 0.0, "carbG": 37.0, "sodiumMg": 15, "calciumMg": 0 },
+    { "code": "M-COLA-ZERO-M", "energyKcal": 1, "proteinG": 0.0, "fatG": 0.0, "carbG": 0.2, "sodiumMg": 20, "calciumMg": 0 }
+  ],
+  "initial": {
+    "title": "feat: 项目上线庆功双人餐",
+    "items": [
+      { "code": "M-GRILLEDCHICKEN", "quantity": 2 },
+      { "code": "M-FRY-M", "quantity": 1 },
+      { "code": "M-COLA-M", "quantity": 2 }
+    ],
+    "coupons": [
+      { "id": "DEMO-COUPON-TEAM-8", "name": "DEMO 券 · 双人餐立减 ¥8", "discountAmount": 8.0, "verified": true, "note": "占位优惠券，非真实麦当劳券" }
+    ],
+    "quote": { "subtotal": 75.0, "discountTotal": 8.0, "deliveryFee": 0.0, "payable": 67.0, "calculated": true }
+  },
+  "revisions": [
+    {
+      "request": "预算降到 60 元以内",
+      "intentPatch": { "budgetMax": 60 },
+      "title": "feat: 项目上线庆功双人餐 v2 —— 预算收紧到 ¥60",
+      "items": [
+        { "code": "M-MCCHICKEN", "quantity": 2 },
+        { "code": "M-FRY-M", "quantity": 1 },
+        { "code": "M-COLA-ZERO-M", "quantity": 2 }
+      ],
+      "coupons": [
+        { "id": "DEMO-COUPON-TEAM-8", "name": "DEMO 券 · 双人餐立减 ¥8", "discountAmount": 8.0, "verified": true, "note": "占位优惠券，非真实麦当劳券" }
+      ],
+      "quote": { "subtotal": 61.0, "discountTotal": 8.0, "deliveryFee": 0.0, "payable": 53.0, "calculated": true }
+    }
+  ],
+  "simulatedOrder": { "orderId": "DEMO-ORDER-000002", "status": "CREATED", "simulated": true }
+}
