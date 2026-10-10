@@ -1,7 +1,14 @@
 # 参赛申请 Issue 文案
 
+> ## ✅ 已于 2026-10-10 19:43（北京时间）提交
+>
+> **https://github.com/M-China/mcd-developer-innovation-challenge/issues/348**
+>
+> 状态 OPEN，提交账号 alexliuxiaoting。以下为当时的文案留档。
+
 > 提交位置：https://github.com/M-China/mcd-developer-innovation-challenge/issues/new
-> 提交截止时间：**2026-10-25 23:59（北京时间）**
+> 报名截止时间：**2026-10-25 23:59（北京时间）**
+> 榜单数据截止：**2026-10-26 00:00（北京时间）**
 > 仓库 state：公开、已含 README / CONTEST_DECLARATION / MCP_INTEGRATION / mcp-config.example.json / workbuddy.md 五个必需文件。
 
 ---
@@ -23,18 +30,30 @@
 
 ---
 
-## 提交命令
+## 提交命令（已执行）
 
 ```bash
 gh issue create \
   --repo M-China/mcd-developer-innovation-challenge \
   --title "【参赛申请】MealPR · AI 替你点餐之前，得先开一个 Pull Request" \
-  --body-file /Users/heytea/Documents/mcd-developer-innovation-challenge/examples/contest-signup-issue-body.md
+  --body-file examples/contest-signup-issue-body.md
+# → https://github.com/M-China/mcd-developer-innovation-challenge/issues/348
 ```
 
 ---
 
-## 提交前自检清单
+## 报名后须知（来自 activityGuidelines.md）
+
+- **排名依据 = GitHub 公开 Star 数**，不是技术评审。前 100 名进榜，Star 为 0 不进榜；
+  同一账号多个项目只取 Star 最高的进榜。
+- 榜单数据截止 **2026-10-26 00:00**，活动开始前的 Star 也计入。
+- 规则明令禁止刷 Star、多账号、盗用/抄袭等手段 —— **发现即取消资格，不要碰**。
+- WorkBuddy 专项奖励（进榜每人 3000 积分）要求仓库内含 `workbuddy.md`，已具备。
+- 麦当劳可能通过 GitHub 注册邮箱或 Issue 留言联系领奖，留意邮箱（2026-11-14 前兑领）。
+
+---
+
+## 提交前自检清单（提交时逐项已验证）
 
 - [x] 五个必需文件齐全且命名标准
 - [x] 仓库为 Public 可访问
@@ -43,3 +62,5 @@ gh issue create \
 - [x] `workbuddy.md` 已包含（WorkBuddy 专项奖励 3000 积分所需）
 - [x] 全仓库严格脱敏扫描通过（唯一命中为测试夹具假数据，已逐行核对）
 - [x] 文案中的能力声明与实际代码一致，未夸大 MCP 集成范围
+- [x] 正文过脱敏扫描（CLEAN）
+- [x] Issue 正文结尾声明 WorkBuddy 使用情况，并指向仓库内 `workbuddy.md`
